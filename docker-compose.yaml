@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - 5004:5000
+    environment:
+      - FLASK_APP=src/__init__.py
+      - FLASK_ENV=development
+
+#this config will create a service called api from Dockerfile
+#the volume is used to mount the code into the countainer. this is a must for a dev environment in order to update the container whenever theres a change to source code
+
+#the version doesnt reflect the version tahts install, just the version you want to use.
+
+#to build the image, use docker-compose build
