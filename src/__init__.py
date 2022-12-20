@@ -22,7 +22,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(128), nullable=False)
     email = db.Column(db.String(128), nullable=False)
-    active = db.column(db.Boolean(), default=True, nullable=False)
+    active = db.Column(db.Boolean(), default=True, nullable=False)
 
     def __init__(self, username, email):
         self.username = username
