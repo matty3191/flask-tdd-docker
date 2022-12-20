@@ -6,6 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    entrypoint: ['/usr/src/app/entrypoint.sh']
     volumes:
       - .:/usr/src/app
     ports:
@@ -13,6 +14,24 @@ services:
     environment:
       - FLASK_APP=src/__init__.py
       - FLASK_ENV=development
+      - APP_SETTINGS=src.config.DevelopmentConfig
+      - DATABASE_URL=postgresql://postgres:postgres@api-db:5432/api_dev
+      - DATABASE_TEST_URL=postgresql://postgres:postgres@api-db:5432/api_test
+    depends_on:
+      - api-db
+
+  api-db:
+    build:
+      context: ./src/db
+      dockerfile: Dockerfile
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+#Once spun up, Postgres will be available on port 5432 for services running in other containers. Since the api service is dependent not only on the container 
+##being up and running but also the actual Postgres instance being up and healthy, let's add an entrypoint.sh file to the project root:
 
 #this config will create a service called api from Dockerfile
 #the volume is used to mount the code into the countainer. this is a must for a dev environment in order to update the container whenever theres a change to source code

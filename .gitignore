@@ -2,3 +2,5 @@ __pycache__
 .venv
 env
 flask-tdd-docker-note.docx
+.gitignore
+.dockerignore
